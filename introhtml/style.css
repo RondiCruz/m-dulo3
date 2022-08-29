@@ -1,0 +1,10 @@
+/* RGB - Red green black */
+body{
+    background-color: rgba(179, 194, 183);
+
+}
+h1{
+    font-family: sans-serif;
+    border:1px solid;
+    text-align: center;
+}
