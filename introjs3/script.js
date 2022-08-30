@@ -10,10 +10,10 @@ function infinity2(){
 //setInterval(function(){
 //CALLBACK
 //JS executa func daqui a 1 segundo
-    setTimeout(function(){
+    setTimeout(function(){ // Define um tempo unico de execução
         console.log(i++);
         return i;
-    }, 1000);
+    }, 1000); // unidade de milisegundos
 }
 
 function date(){
