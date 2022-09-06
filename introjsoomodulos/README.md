@@ -133,4 +133,104 @@ console.log(umaPessoa.gerarIdentidade());
 ```
 A palavra chave class, define uma classe que é utilizada com template para criação de novos objetos. Não é possível (ainda) criar atributos dentro do escopo de classe, todos os atributos devem ser definidos dentro do contruitor. E utilizar a palavra reservada new para instanciar o objeto a partir da classe.
 
+```javascript
+
+class PessoaJuridica extends Pessoa {
+    constructor(cnpj){
+        super();
+        this.CNPJ = cnpj;
+ ```
+ A palavra reservada extends permite o uso da herança em Javascript.Funcionamento similar do java, exigindo a chamada do contrutor da classe PAI através da chamada do método super();
+
+
+ ## Módulos
+ IMPORTANTE: precisa colocar o type="module" no html
+ ```HTML
+  <script type="module" src="script3.js"></script>
+  ```
+  Exemplo simples de exportação de um módulo e importação em outro arquivo.
+
+### Arquivo pessoa .js
+
+ ```javascript
+ export class Pessoa {
+    constructor(nome, idade){
+        this.nome = nome;
+        this.idade = idade;
+    }
+}
+```
+### Arquivo script3.js
+```javascript
+import {Pessoa} from "./pessoa.js";
+let umaPessoa = new Pessoa("Zezinho",22);
+```
+
+Exportar duas classes e imprtar em outro arquivo.
+
+```javascript
+export class Pessoa {
+    constructor(nome, idade){
+        this.nome = nome;
+        this.idade = idade;
+    }
+}
+
+export class Cidade {
+    constructor(nome){
+        this.nome = nome;
+    }
+}
+```
+
+```javascript
+import {Pessoa, Cidade } from "./pessoa.js";
+```
+
+Exemplo de export no final do arquivo.
+```javascript
+// export class Pessoa{
+ class Pessoa {
+    constructor(nome, idade){
+        this.nome = nome;
+        this.idade = idade;
+    }
+}
+ // export class Cidade{
+ class Cidade {
+    constructor(nome){
+        this.nome = nome;
+    }
+}
+
+export {
+    Pessoa,
+    Cidade
+}
+``` 
+
+Export DEFAULT - quando eu não tenho o controle sobre o import.
+```javascript
+export default class Pessoa {
+    constructor(nome, idade){
+        this.nome = nome;
+        this.idade = idade;
+    }
+}
+```
+
+```javascript
+import qqcoisa from "./pessoa.js";
+let umaPessoa = new Pessoa("Zezinho",22);
+```
+
+
+
+
+
+
+
+
+
+
 
