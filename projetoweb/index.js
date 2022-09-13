@@ -2,10 +2,11 @@ const express = require('express');
 const app = express();
 const { engine } = require('express-handlebars');
 const path = require('path');
+const bodyparser = require('body-parser');
 
+app.use(bodyparser.urlencoded({ extended:false}));
 app.set('view engine', 'handlebars');
 app.engine('handlebars', engine());
-
 app.use('/css', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/css')))
 app.use('/js', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/js')))
 app.use('/js', express.static(path.join(__dirname, 'node_modules/jquery/dist')))
@@ -27,6 +28,8 @@ const fakeData = [
     sexo: 'Feminino',
     telefone: '5555-4321'
   },
+ 
+  
 ];
 
 app.get("/", function(req,res){
@@ -36,6 +39,31 @@ app.get("/", function(req,res){
 
 app.get("/clientes", function(req,res){
   res.render('cliente/cliente',{listaclientes: fakeData});
+});
+
+
+app.get("/clientes/novo", function(req,res){
+  res.render("cliente/formcliente");
+});
+
+app.post("/clientes/save", function(req,res){
+   // console.log(req.body.nome);
+   // Criando um novo objeto JS com o atributo nome
+   //Math.max()
+
+  let maiorid = Math.max(...fakeData.map( o => o.id)); 
+  if (maiorid == -Infinity) maiorid = 0;
+
+   let novoCliente = {
+     id:maiorid + 1,
+     nome: req.body.nome,
+     endereco: req.body.endereco,
+     sexo: req.body.sexo,
+     telefone: req.body.telefone
+
+   };
+   fakeData.push(novoCliente);
+   res.redirect("/clientes");
 });
 
 app.listen(3000, () =>{ // CALLBACK
