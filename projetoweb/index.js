@@ -46,23 +46,43 @@ app.get("/clientes/novo", function(req,res){
   res.render("cliente/formcliente");
 });
 
+app.get("/clientes/alterar/:id", function(req,res){
+    let id = req.params['id'];
+    let umcliente = fakeData.find(o => o.id == id);
+    res.render('cliente/formcliente',{cliente: umcliente});
+});
+
 app.post("/clientes/save", function(req,res){
    // console.log(req.body.nome);
    // Criando um novo objeto JS com o atributo nome
    //Math.max()
 
-  let maiorid = Math.max(...fakeData.map( o => o.id)); 
-  if (maiorid == -Infinity) maiorid = 0;
+   if(req.body.nome === ""){
+   //  res.redirect("/clientes");
+     res.render('cliente/formcliente',{cliente: req.body});
+     return;
+   }
 
-   let novoCliente = {
-     id:maiorid + 1,
-     nome: req.body.nome,
-     endereco: req.body.endereco,
-     sexo: req.body.sexo,
-     telefone: req.body.telefone
+   let clienteantigo = fakeData.find( o => o.id == req.body.id);
 
-   };
-   fakeData.push(novoCliente);
+   if(clienteantigo != undefined){
+     clienteantigo.nome = req.body.nome;
+     clienteantigo.endereco = req.body.endereco;
+     clienteantigo.sexo = req.body.sexo;
+     clienteantigo.telefone = req.body.telefone;  
+   }else{
+    let maiorid = Math.max(...fakeData.map( o => o.id)); 
+    if (maiorid == -Infinity) maiorid = 0;
+  
+     let novoCliente = {
+       id:maiorid + 1,
+       nome: req.body.nome,
+       endereco: req.body.endereco,
+       sexo: req.body.sexo,
+       telefone: req.body.telefone
+     };
+     fakeData.push(novoCliente);
+   }  
    res.redirect("/clientes");
 });
 
